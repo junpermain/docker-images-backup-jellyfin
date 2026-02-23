@@ -18,10 +18,12 @@ jobs:
           docker pull --platform linux/arm64 jellyfin/jellyfin:latest
           docker save jellyfin/jellyfin:latest | gzip > jellyfin-n1-arm64.tar.gz
 
-      - name: Upload to Release
-        uses: softprops/action-gh-release@v1
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4          
         with:
-          files: jellyfin-n1-arm64.tar.gz
-          tag_name: n1-jellyfin-latest
+        name: jellyfin-n1-arm64
+        path: jellyfin-n1-arm64.tar.gz
+        retention-days: 7
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
