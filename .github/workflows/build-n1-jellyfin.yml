@@ -1,0 +1,27 @@
+name: Build Jellyfin for N1 (ARM64)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Pull ARM64 Jellyfin
+        run: |
+          docker pull --platform linux/arm64 jellyfin/jellyfin:latest
+          docker save jellyfin/jellyfin:latest | gzip > jellyfin-n1-arm64.tar.gz
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: jellyfin-n1-arm64.tar.gz
+          tag_name: n1-jellyfin-latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
