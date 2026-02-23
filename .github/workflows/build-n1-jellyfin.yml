@@ -21,9 +21,9 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4          
         with:
-        name: jellyfin-n1-arm64
-        path: jellyfin-n1-arm64.tar.gz
-        retention-days: 7
+          name: jellyfin-n1-arm64
+          path: jellyfin-n1-arm64.tar.gz
+          retention-days: 7
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
